@@ -192,3 +192,142 @@ Understand what Angular is and set up the development environment.
 
 ### Summary
 On Day 1, you've learned about Angular, set up your development environment, created your first Angular app, and served it locally. You now have a basic understanding of Angular and the tools needed to start building applications.
+
+---
+
+### Day 2: Angular Project Structure
+
+#### Objective:
+Learn the structure of an Angular project and understand the purpose of key files and folders.
+
+#### Tasks:
+
+1. **Explore the Angular Project Structure**
+   - When you create a new Angular application using the Angular CLI, a specific project structure is generated. Understanding this structure is crucial for efficient development.
+
+2. **Understand Key Files and Folders**
+
+Let's explore the project structure of `my-first-app` created on Day 1:
+
+```plaintext
+my-first-app/
+├── e2e/                # End-to-end tests
+├── node_modules/       # Project dependencies
+├── src/                # Application source code
+│   ├── app/            # Main application module and components
+│   ├── assets/         # Static assets like images
+│   ├── environments/   # Environment configuration files
+│   ├── index.html      # Main HTML file
+│   ├── main.ts         # Main entry point for the application
+│   ├── polyfills.ts    # Polyfills needed by Angular
+│   ├── styles.css      # Global styles
+│   └── test.ts         # Entry point for unit tests
+├── .editorconfig       # Editor configuration
+├── .gitignore          # Git ignore file
+├── angular.json        # Angular CLI configuration
+├── package.json        # Node.js package configuration
+├── README.md           # Project README file
+├── tsconfig.json       # TypeScript configuration
+└── tslint.json         # TSLint configuration
+```
+
+3. **Detailed Explanation of Key Files and Folders**
+
+- **`e2e/`**: This folder contains end-to-end tests for your application. These tests simulate user interactions and verify that the application behaves as expected.
+
+- **`node_modules/`**: This folder contains all the npm packages installed for your project. These packages include Angular itself and other dependencies.
+
+- **`src/`**: This is the main folder where you'll be spending most of your time. It contains the source code of your application.
+
+  - **`app/`**: Contains the main application module and components.
+    - **`app.module.ts`**: The root module of the application. It declares all the components, directives, and services used in the app.
+    - **`app.component.ts`**: The root component of the application. It contains the logic and data for the main view.
+    - **`app.component.html`**: The template (HTML) for the root component.
+    - **`app.component.css`**: The styles for the root component.
+
+  - **`assets/`**: This folder is for storing static assets like images, fonts, and other files. These assets can be accessed by your application.
+
+  - **`environments/`**: This folder contains environment-specific configuration files. You can define different settings for different environments (e.g., development, production).
+
+  - **`index.html`**: This is the main HTML file that gets served when someone visits your application. It contains the root element (`<app-root></app-root>`) where Angular will render your application.
+
+  - **`main.ts`**: This is the main entry point for your application. It bootstraps the root module (`AppModule`) and starts the application.
+
+  - **`polyfills.ts`**: This file includes polyfills needed by Angular to support older browsers.
+
+  - **`styles.css`**: This file contains global styles for your application.
+
+  - **`test.ts`**: This file is the entry point for unit tests. It sets up the Angular testing environment.
+
+- **Configuration Files:**
+  - **`.editorconfig`**: This file helps maintain consistent coding styles between different editors and IDEs.
+  - **`.gitignore`**: This file specifies which files and folders should be ignored by Git.
+  - **`angular.json`**: This file contains configuration options for Angular CLI. It defines how the application is built and served.
+  - **`package.json`**: This file lists the project's dependencies and scripts. It also contains metadata about your project.
+  - **`README.md`**: This file contains a brief description of the project and instructions on how to set it up.
+  - **`tsconfig.json`**: This file contains TypeScript configuration options.
+  - **`tslint.json`**: This file contains TSLint configuration options for linting your TypeScript code.
+
+### Example: Modify and Understand `app.component`
+
+1. **Open `src/app/app.component.ts`**:
+   - This is the TypeScript file for the root component.
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'my-first-app';
+}
+```
+
+- **Explanation:**
+  - `@Component`: This decorator defines the component. It specifies the selector, template, and styles.
+  - `selector: 'app-root'`: This defines the custom HTML tag for the component.
+  - `templateUrl: './app.component.html'`: This points to the HTML template for the component.
+  - `styleUrls: ['./app.component.css']`: This points to the styles for the component.
+  - `title = 'my-first-app'`: This defines a property `title` that is used in the template.
+
+2. **Open `src/app/app.component.html`**:
+   - This is the HTML template for the root component.
+
+```html
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+```
+
+- **Explanation:**
+  - `{{ title }}`: This is Angular's interpolation syntax. It binds the `title` property from the component class to the HTML.
+
+3. **Modify the Component**:
+   - Change the `title` property in `app.component.ts` to a different value:
+     ```typescript
+     title = 'My Angular App';
+     ```
+   - Update the HTML template to add more content:
+     ```html
+     <div style="text-align:center">
+       <h1>
+         Welcome to {{ title }}!
+       </h1>
+       <p>This is a basic Angular application.</p>
+     </div>
+     ```
+
+4. **Serve the Application**:
+   - Save your changes and run:
+     ```sh
+     ng serve
+     ```
+   - Open a web browser and go to `http://localhost:4200`. You should see the updated content.
+
+### Summary
+On Day 2, you've learned about the Angular project structure and the purpose of key files and folders. You've also modified the root component to understand how components work in Angular.
