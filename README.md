@@ -577,3 +577,171 @@ Learn about components and templates in Angular. Understand how to create and us
 On Day 3, you've learned about Angular components and templates. You've created a new component, understood the component decorator, used data binding in the template, and included the new component in the application.
 
 ---
+
+### Day 4: Directives in Angular
+
+#### Objective:
+Understand and use Angular directives. Learn about built-in directives and how to create your own custom directives.
+
+#### Tasks:
+
+1. **Introduction to Directives**
+
+   - **What are Directives?**
+     - Directives are classes in Angular that add behavior to elements in your Angular applications. They can modify the DOM (Document Object Model) or add additional functionality.
+
+   - **Types of Directives:**
+     - **Structural Directives**: Change the DOM layout by adding or removing elements. Examples include `*ngIf` and `*ngFor`.
+     - **Attribute Directives**: Change the appearance or behavior of an element, component, or another directive. Examples include `ngClass` and `ngStyle`.
+
+2. **Using Built-in Directives**
+
+   - **`*ngIf` Directive:**
+     - The `*ngIf` directive conditionally includes or excludes an element from the DOM based on a boolean expression.
+
+     **Example:**
+     - Open `app.component.html` and add the following code:
+
+       ```html
+       <div *ngIf="showMessage">
+         <p>The message is visible!</p>
+       </div>
+       <button (click)="toggleMessage()">Toggle Message</button>
+       ```
+
+     - Open `app.component.ts` and add:
+
+       ```typescript
+       export class AppComponent {
+         title = 'my-first-app';
+         showMessage = true;
+
+         toggleMessage() {
+           this.showMessage = !this.showMessage;
+         }
+       }
+       ```
+
+     - **Explanation:**
+       - `*ngIf="showMessage"`: The `div` is included in the DOM only if `showMessage` is `true`.
+       - `(click)="toggleMessage()"`: The `toggleMessage()` method is called when the button is clicked, toggling the `showMessage` property.
+
+   - **`*ngFor` Directive:**
+     - The `*ngFor` directive is used to repeat an element for each item in a list.
+
+     **Example:**
+     - Open `app.component.html` and add the following code:
+
+       ```html
+       <ul>
+         <li *ngFor="let item of items">{{ item }}</li>
+       </ul>
+       ```
+
+     - Open `app.component.ts` and add:
+
+       ```typescript
+       export class AppComponent {
+         title = 'my-first-app';
+         items = ['Item 1', 'Item 2', 'Item 3'];
+       }
+       ```
+
+     - **Explanation:**
+       - `*ngFor="let item of items"`: Repeats the `li` element for each item in the `items` array.
+
+   - **`ngClass` Directive:**
+     - The `ngClass` directive adds or removes CSS classes based on conditions.
+
+     **Example:**
+     - Open `app.component.html` and add:
+
+       ```html
+       <div [ngClass]="{ 'highlight': isHighlighted }">
+         This text will be highlighted based on the condition.
+       </div>
+       <button (click)="toggleHighlight()">Toggle Highlight</button>
+       ```
+
+     - Open `app.component.css` and add:
+
+       ```css
+       .highlight {
+         background-color: yellow;
+       }
+       ```
+
+     - Open `app.component.ts` and add:
+
+       ```typescript
+       export class AppComponent {
+         title = 'my-first-app';
+         isHighlighted = false;
+
+         toggleHighlight() {
+           this.isHighlighted = !this.isHighlighted;
+         }
+       }
+       ```
+
+     - **Explanation:**
+       - `[ngClass]="{ 'highlight': isHighlighted }"`: Adds the `highlight` class if `isHighlighted` is `true`.
+
+3. **Create a Custom Directive**
+
+   - **Generate a New Directive:**
+     - Use Angular CLI to generate a new directive:
+       ```sh
+       ng generate directive highlight
+       ```
+
+     - **Explanation**:
+       - This creates a new directive called `HighlightDirective`.
+
+   - **Implement the Directive:**
+     - Open `highlight.directive.ts` and modify it as follows:
+
+       ```typescript
+       import { Directive, ElementRef, Renderer2, HostListener } from '@angular/core';
+
+       @Directive({
+         selector: '[appHighlight]'
+       })
+       export class HighlightDirective {
+         constructor(private el: ElementRef, private renderer: Renderer2) { }
+
+         @HostListener('mouseenter') onMouseEnter() {
+           this.renderer.setStyle(this.el.nativeElement, 'backgroundColor', 'yellow');
+         }
+
+         @HostListener('mouseleave') onMouseLeave() {
+           this.renderer.setStyle(this.el.nativeElement, 'backgroundColor', 'transparent');
+         }
+       }
+       ```
+
+     - **Explanation**:
+       - `@Directive({ selector: '[appHighlight]' })`: Defines the directive with a selector `appHighlight`.
+       - `ElementRef`: Allows access to the DOM element.
+       - `Renderer2`: Provides a safe way to manipulate the DOM.
+       - `@HostListener('mouseenter')`: Listens for the mouse enter event and changes the background color.
+       - `@HostListener('mouseleave')`: Listens for the mouse leave event and resets the background color.
+
+   - **Use the Custom Directive:**
+     - Open `app.component.html` and use the directive:
+
+       ```html
+       <p appHighlight>Hover over this text to see the highlight effect.</p>
+       ```
+
+4. **Serve the Application**
+
+   - **Run the application**:
+     ```sh
+     ng serve
+     ```
+   - Open a web browser and go to `http://localhost:4200`. You should see the results of the built-in directives and the custom directive in action.
+
+### Summary
+On Day 4, you've learned about Angular directives, including built-in directives like `*ngIf`, `*ngFor`, and `ngClass`, as well as how to create and use a custom directive. You’ve seen how directives can be used to manipulate the DOM and add dynamic behavior to your Angular application.
+
