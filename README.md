@@ -331,3 +331,127 @@ export class AppComponent {
 
 ### Summary
 On Day 2, you've learned about the Angular project structure and the purpose of key files and folders. You've also modified the root component to understand how components work in Angular.
+
+---
+### Day 3: Components and Templates
+
+#### Objective:
+Learn about components and templates in Angular. Understand how to create and use components, and how to bind data to templates.
+
+#### Tasks:
+
+1. **Understand Components and Templates**
+
+   - **Components**:
+     - Components are the building blocks of an Angular application. Each component consists of:
+       - A TypeScript class that contains data and logic.
+       - An HTML template that defines the view.
+       - Optional CSS styles that define the appearance of the view.
+
+   - **Templates**:
+     - Templates are used to define the view of a component. They contain HTML along with Angular-specific syntax for binding data and handling events.
+
+2. **Create a New Component**
+
+   - **Use Angular CLI to Generate a Component**:
+     - Open your terminal and navigate to your Angular project directory (`my-first-app`).
+     - Run the following command to generate a new component:
+       ```sh
+       ng generate component my-component
+       ```
+     - **Explanation**:
+       - `ng generate component <component-name>`: This command generates a new component with the specified name. It creates four files:
+         - `my-component.component.ts`: The TypeScript file for the component.
+         - `my-component.component.html`: The HTML template for the component.
+         - `my-component.component.css`: The CSS file for the component's styles.
+         - `my-component.component.spec.ts`: The unit test file for the component.
+
+3. **Understand the Component Decorator**
+
+   - Open the generated `my-component.component.ts` file. It should look like this:
+
+     ```typescript
+     import { Component, OnInit } from '@angular/core';
+
+     @Component({
+       selector: 'app-my-component',
+       templateUrl: './my-component.component.html',
+       styleUrls: ['./my-component.component.css']
+     })
+     export class MyComponent implements OnInit {
+
+       constructor() { }
+
+       ngOnInit(): void {
+       }
+
+     }
+     ```
+
+   - **Explanation**:
+     - `@Component`: This decorator marks the class as an Angular component and provides metadata about the component.
+     - `selector`: Defines the custom HTML tag for the component.
+     - `templateUrl`: Points to the HTML template for the component.
+     - `styleUrls`: Points to the CSS file(s) for the component.
+
+4. **Create a Simple Template and Use Data Binding**
+
+   - **Open `my-component.component.ts`** and add a property:
+
+     ```typescript
+     export class MyComponent implements OnInit {
+       message: string;
+
+       constructor() {
+         this.message = 'Hello from MyComponent!';
+       }
+
+       ngOnInit(): void {
+       }
+     }
+     ```
+
+   - **Explanation**:
+     - `message: string`: This property holds the data that will be displayed in the template.
+     - `this.message = 'Hello from MyComponent!'`: This initializes the `message` property.
+
+   - **Open `my-component.component.html`** and use data binding to display the `message`:
+
+     ```html
+     <div>
+       <p>{{ message }}</p>
+     </div>
+     ```
+
+   - **Explanation**:
+     - `{{ message }}`: This is Angular's interpolation syntax. It binds the `message` property from the component class to the HTML, displaying the value of `message`.
+
+5. **Use the New Component in the Application**
+
+   - **Open `app.component.html`** and include the new component using its selector:
+
+     ```html
+     <div style="text-align:center">
+       <h1>
+         Welcome to {{ title }}!
+       </h1>
+       <p>This is a basic Angular application.</p>
+       <app-my-component></app-my-component> <!-- New component -->
+     </div>
+     ```
+
+   - **Explanation**:
+     - `<app-my-component></app-my-component>`: This is the custom HTML tag for the new component. Angular will render the template of `MyComponent` inside this tag.
+
+6. **Serve the Application**
+
+   - **Run the application**:
+     ```sh
+     ng serve
+     ```
+   - Open a web browser and go to `http://localhost:4200`. You should see the message from the new component displayed.
+
+### Summary
+On Day 3, you've learned about Angular components and templates. You've created a new component, understood the component decorator, used data binding in the template, and included the new component in the application.
+
+---
