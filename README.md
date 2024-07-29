@@ -745,3 +745,164 @@ Understand and use Angular directives. Learn about built-in directives and how t
 ### Summary
 On Day 4, you've learned about Angular directives, including built-in directives like `*ngIf`, `*ngFor`, and `ngClass`, as well as how to create and use a custom directive. You’ve seen how directives can be used to manipulate the DOM and add dynamic behavior to your Angular application.
 
+---
+### Day 5: Services and Dependency Injection
+
+#### Objective:
+Understand what services and dependency injection are in Angular, learn how to create and use services, and understand how to inject dependencies into components and other services.
+
+#### Tasks:
+
+1. **Introduction to Services and Dependency Injection**
+
+   - **What are Services?**
+     - Services are used to share data and logic across multiple components. They typically contain business logic, data access methods, and other reusable code.
+
+   - **What is Dependency Injection?**
+     - Dependency Injection (DI) is a design pattern used to implement IoC (Inversion of Control), allowing a class to receive its dependencies from an external source rather than creating them itself. In Angular, DI is used to inject services into components and other services.
+
+2. **Creating a Service**
+
+   - **Generate a Service:**
+     - Use Angular CLI to generate a new service:
+       ```sh
+       ng generate service data
+       ```
+     - **Explanation:**
+       - This command creates a new service called `DataService`.
+
+   - **Implement the Service:**
+     - Open `src/app/data.service.ts` and modify it as follows:
+
+       ```typescript
+       import { Injectable } from '@angular/core';
+
+       @Injectable({
+         providedIn: 'root',
+       })
+       export class DataService {
+         private data: string[] = [];
+
+         constructor() { }
+
+         addData(item: string) {
+           this.data.push(item);
+         }
+
+         getData(): string[] {
+           return this.data;
+         }
+       }
+       ```
+
+     - **Explanation:**
+       - `@Injectable({ providedIn: 'root' })`: Marks the class as a service that can be injected, and specifies that it should be provided at the root level, meaning it will be a singleton throughout the application.
+       - `addData(item: string)`: A method to add data to the service.
+       - `getData()`: A method to retrieve data from the service.
+
+3. **Using the Service in a Component**
+
+   - **Inject the Service into a Component:**
+     - Open `src/app/app.component.ts` and modify it as follows:
+
+       ```typescript
+       import { Component } from '@angular/core';
+       import { DataService } from './data.service';
+
+       @Component({
+         selector: 'app-root',
+         templateUrl: './app.component.html',
+         styleUrls: ['./app.component.css']
+       })
+       export class AppComponent {
+         title = 'my-first-app';
+         newItem: string = '';
+         items: string[] = [];
+
+         constructor(private dataService: DataService) {}
+
+         addItem() {
+           if (this.newItem) {
+             this.dataService.addData(this.newItem);
+             this.newItem = '';
+             this.updateItems();
+           }
+         }
+
+         updateItems() {
+           this.items = this.dataService.getData();
+         }
+       }
+       ```
+
+     - **Explanation:**
+       - `private dataService: DataService`: Injects the `DataService` into the component.
+       - `addItem()`: Uses the `addData` method of `DataService` to add a new item.
+       - `updateItems()`: Retrieves the updated data from the `DataService`.
+
+   - **Update the Component Template:**
+     - Open `src/app/app.component.html` and modify it as follows:
+
+       ```html
+       <div style="text-align:center">
+         <h1>Welcome to {{ title }}!</h1>
+         <p>This is a basic Angular application.</p>
+         <app-my-component></app-my-component>
+       </div>
+       <div>
+         <input [(ngModel)]="newItem" placeholder="Enter new item">
+         <button (click)="addItem()">Add Item</button>
+       </div>
+       <ul>
+         <li *ngFor="let item of items">{{ item }}</li>
+       </ul>
+       ```
+
+     - **Explanation:**
+       - `[(ngModel)]="newItem"`: Two-way data binding for the input field, binding it to the `newItem` property in the component.
+       - `(click)="addItem()"`: Binds the button click event to the `addItem` method.
+       - `*ngFor="let item of items"`: Iterates over the `items` array and displays each item in a list.
+
+4. **Configure `ngModel` in the App Module**
+
+   - **Import `FormsModule`:**
+     - Open `src/app/app.module.ts` and modify it as follows:
+
+       ```typescript
+       import { NgModule } from '@angular/core';
+       import { BrowserModule } from '@angular/platform-browser';
+       import { FormsModule } from '@angular/forms'; // Import FormsModule
+
+       import { AppComponent } from './app.component';
+       import { MyComponent } from './my-component/my-component.component';
+
+       @NgModule({
+         declarations: [
+           AppComponent,
+           MyComponent
+         ],
+         imports: [
+           BrowserModule,
+           FormsModule // Add FormsModule to imports array
+         ],
+         providers: [],
+         bootstrap: [AppComponent]
+       })
+       export class AppModule { }
+       ```
+
+     - **Explanation:**
+       - `FormsModule`: Angular module for template-driven forms, required for using `ngModel`.
+
+5. **Serve the Application**
+
+   - **Run the application**:
+     ```sh
+     ng serve
+     ```
+   - Open a web browser and go to `http://localhost:4200`. You should see the input field and button for adding items, and the list of items added.
+
+### Summary
+On Day 5, you've learned about services and dependency injection in Angular. You've created a service, used it in a component, and understood how to inject dependencies. You’ve also updated the component template to interact with the service, allowing for data to be added and displayed.
+
+---
